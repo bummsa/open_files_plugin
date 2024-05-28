@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'open_files_plugin'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'A Flutter plugin to count the number of open files on iOS.'
   s.description      = <<-DESC
                        A Flutter plugin to count the number of open files on iOS.
