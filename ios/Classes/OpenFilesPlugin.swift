@@ -11,11 +11,12 @@ public class SwiftOpenFilesPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if call.method == "getOpenFileCount" {
             result(getOpenFileCount())
+        } else if call.method == "getFileDescriptorLimits" {
+            result(getFileDescriptorLimits())
         } else {
             result(FlutterMethodNotImplemented)
         }
     }
-
     private func getOpenFileCount() -> Int {
         var openFileCount = 0
         var fd: Int32 = 0
