@@ -1,6 +1,6 @@
 name: open_files_plugin
 description: A Flutter plugin to count the number of open files on iOS.
-version: 0.0.2
+version: 0.0.3
 homepage: https://example.com
 
 environment:
