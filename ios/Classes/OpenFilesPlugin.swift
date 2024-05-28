@@ -17,11 +17,15 @@ public class SwiftOpenFilesPlugin: NSObject, FlutterPlugin {
     }
 
     private func getOpenFileCount() -> Int {
-        var count = 0
-        let files = try? FileManager.default.contentsOfDirectory(atPath: "/proc/self/fd")
-        if let files = files {
-            count = files.count
-        }
-        return count
+        var mib = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
+        var size = 0
+        sysctl(&mib, u_int(mib.count), nil, &size, nil, 0)
+        var proc_kinfo = [CChar](repeating: 0, count: size)
+        sysctl(&mib, u_int(mib.count), &proc_kinfo, &size, nil, 0)
+        
+        let kinfo_ptr = UnsafeRawPointer(proc_kinfo).assumingMemoryBound(to: kinfo_proc.self)
+        let filedesc = kinfo_ptr.pointee.kp_proc.p_fd
+        
+        return Int(filedesc)
     }
 }
