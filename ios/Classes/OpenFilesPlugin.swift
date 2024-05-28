@@ -32,4 +32,16 @@ public class SwiftOpenFilesPlugin: NSObject, FlutterPlugin {
         }
         return openFileCount
     }
+
+    private func getFileDescriptorLimits() -> [String: Int] {
+        var rlimit = rlimit()
+        if getrlimit(RLIMIT_NOFILE, &rlimit) == 0 {
+            let softLimit = Int(rlimit.rlim_cur)
+            let hardLimit = Int(rlimit.rlim_max)
+            return ["softLimit": softLimit, "hardLimit": hardLimit]
+        } else {
+            return ["softLimit": -1, "hardLimit": -1]
+        }
+    }
+
 }
